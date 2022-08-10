@@ -3,7 +3,17 @@ const express = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
 const debug = require("debug")("app:SessionsRoute");
 
+const speakerService = require("../services/speakerServices")
+
 const sessionRouter = express.Router();
+
+sessionRouter.use((req, res, next) => {
+  if(req.user) {
+next()
+  } else {
+    res.redirect("/auth/signIn")
+  }
+})
 
 sessionRouter.route("/").get((req, res) => {
   const url =
@@ -39,6 +49,8 @@ sessionRouter.route("/:id").get((req, res) => {
       const session = await db
         .collection("sessions")
         .findOne({ _id: new ObjectId(id) });
+        const speaker = await speakerService.getSpeakerById(session.speakers[0].id)
+      session.speaker = speaker.data
       res.render(`session`, { session });
     } catch (error) {
       console.log("Err : ", error.stack);

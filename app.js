@@ -3,7 +3,6 @@ const chalk = require("chalk");
 const debug = require("debug")("app");
 const morgan = require("morgan");
 const path = require("path");
-const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const app = express();
