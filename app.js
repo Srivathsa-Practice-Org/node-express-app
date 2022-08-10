@@ -24,10 +24,12 @@ app.set("view engine", "ejs");
 const sessionRouter = require("./src/routes/sessionsRouter");
 const adminRouter = require("./src/routes/adminRouter");
 const authRouter = require("./src/routes/authRouter");
+const testRouter = require("./src/routes/testDynamicDB");
 
 app.use("/sessions", sessionRouter);
 app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
+app.use("/test", testRouter);
 
 app.get("/", (req, res) => {
   res.render("index", {
